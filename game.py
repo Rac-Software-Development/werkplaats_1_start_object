@@ -1,6 +1,5 @@
 import pygame
 from pygame.sprite import Group, collide_rect
-
 from logo import Logo
 
 pygame.init()
@@ -29,9 +28,18 @@ def quit_game_requested():
 
 
 logo = Logo()
+logo2 = Logo(x_start=300, y_start=300)
 while not quit_game_requested():
     canvas.fill(BACKGROUND_COLOR)
-    logo.update(canvas)
+    logo.update(canvas)  # Logo 1 verplaatst en wordt getekend
+    logo2.update(canvas) # Logo 2verplaatst en wordt getekend
+
+    # We controleren hier of de logos botsen. "colliderect" werkt alleen als beide objecten in de parameters:
+    # - een "rect" attribuut hebben
+    # - de klasse "Sprite" erven
+    if collide_rect(logo, logo2):
+        logo.reverse()
+        logo2.reverse()
     pygame.display.flip()
     clock.tick(GAME_SPEED)
 
